@@ -65,7 +65,12 @@ public class RemovedPartitionState<K, V> extends PartitionState<K, V> {
     @Override
     public void maybeRegisterNewPollBatchAsWork(@NonNull EpochAndRecordsMap<K, V>.RecordsAndEpoch recordsAndEpoch) {
         // no-op
-        log.warn("Dropping polled record batch for partition no longer assigned. WC: {}", recordsAndEpoch);
+
+        log.warn("Dropping polled record batch for partition no longer assigned. topic: {} partition: {}", recordsAndEpoch.getTopicPartition().topic(),
+                recordsAndEpoch.getTopicPartition().partition());
+
+        log.debug("Details for dropped record batch: {}", recordsAndEpoch);
+
     }
 
     /**
